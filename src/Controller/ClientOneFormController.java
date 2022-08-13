@@ -28,6 +28,8 @@ public class ClientOneFormController {
                 try {
                     socket = new Socket("localhost",PORT);
                     txtArea.appendText("\nMe :"+ txtMessage.getText());
+                    dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                    dataInputStream = new DataInputStream(socket.getInputStream());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
