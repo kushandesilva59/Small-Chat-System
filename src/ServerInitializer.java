@@ -1,31 +1,19 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class ServerInitializer {
-    Socket sockets [];
-    static int count ;
-    ServerSocket serverSocket;
-    DataOutputStream dataOutputStream;
-    DataInputStream dataInputStream;
-    static int length = 2;
+import java.io.IOException;
 
-    public void initSize(int length){
-        sockets = new Socket[length];
+public class ServerInitializer extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
-    public void setSize(){
-        if(count >= length){
-            length = length*2;
-            Socket [] temp = new Socket[length];
-
-            for (int i=0;i<length;i++){
-                temp[i] = sockets[i];
-            }
-            sockets = temp;
-        }
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("View/ServerForm.fxml"))));
+        primaryStage.show();
     }
-
-
 }
