@@ -3,7 +3,7 @@ package Controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
 
-public class LoginFormController {
+public class ClientOneLoginFormController {
 
     public TextField txtUserName;
     String userName;
