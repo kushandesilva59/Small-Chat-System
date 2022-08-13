@@ -10,5 +10,6 @@ public class ClientOneLoginFormController {
 
     public void loginOnAction(ActionEvent event) {
         userName = txtUserName.getText();
+
     }
 }
