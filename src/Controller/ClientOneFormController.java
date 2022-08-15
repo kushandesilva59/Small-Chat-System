@@ -54,15 +54,33 @@ public class ClientOneFormController {
     }
 
     public void sendOnAction(ActionEvent event) throws IOException {
-       while(socket.isConnected()){
-           txtArea.appendText("\nMe :"+ txtMessage.getText());
-           dataOutputStream.writeUTF(txtMessage.getText());
-           dataOutputStream.flush();
-       }
+
+        try {
+            while (socket.isConnected()){
+                dataOutputStream.writeUTF(txtMessage.getText());
+                txtArea.appendText("\nme : " + txtMessage.getText());
+                dataOutputStream.flush();
+                break;
+            }
+        } catch (IOException e) {
+            closeEveryThing(socket,dataInputStream,dataOutputStream);
+            e.printStackTrace();
+        }
     }
 
-    public void setName() throws IOException {
-        userName = ClientTwoLoginFormController.getName();
+    public void setName() {
+        try {
+            while (socket.isConnected()) {
+                String name = ClientOneLoginFormController.getName();
+                System.out.println(name);
+                dataOutputStream.writeUTF(name);
+                dataOutputStream.flush();
+                break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void receivedMessages(){
