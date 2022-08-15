@@ -13,11 +13,15 @@ public class ClientTwoLoginFormController {
 
     public AnchorPane clientTwoLoginContext;
     public TextField txtUsername;
-    String username;
+    static String username;
 
     public void loginOnAction(ActionEvent event) throws IOException {
        Stage stage = (Stage) clientTwoLoginContext.getScene().getWindow();
        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../View/ClientTwoForm.fxml"))));
        stage.show();
+    }
+
+    public static String getName(){
+        return username;
     }
 }
