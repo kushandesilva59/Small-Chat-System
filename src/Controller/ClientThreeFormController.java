@@ -38,6 +38,17 @@ public class ClientThreeFormController {
 
     public void sendOnAction(ActionEvent event) {
 
+        try {
+            while (socket.isConnected()){
+                dataOutputStream.writeUTF(txtMessage.getText());
+                txtArea.appendText("\nme : " + txtMessage.getText());
+                dataOutputStream.flush();
+                break;
+            }
+        } catch (IOException e) {
+            closeEveryThing(socket,dataInputStream,dataOutputStream);
+            e.printStackTrace();
+        }
     }
 
     private void closeEveryThing(Socket socket, DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
@@ -58,7 +69,7 @@ public class ClientThreeFormController {
     public void setName() {
         try {
             while (socket.isConnected()) {
-                String name = ClientOneLoginFormController.getName();
+                String name = ClientThreeLoginFormController.getUsername();
                 System.out.println(name);
                 dataOutputStream.writeUTF("\n"+name);
                 dataOutputStream.flush();

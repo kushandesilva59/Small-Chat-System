@@ -14,7 +14,7 @@
       <Button layoutX="596.0" layoutY="458.0" mnemonicParsing="false" onAction="#sendOnAction" prefHeight="31.0" prefWidth="94.0" text="Send" />
       <ImageView fitHeight="31.0" fitWidth="44.0" layoutX="540.0" layoutY="458.0" onMouseClicked="#mouseClickOnAction" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Asserts/outline_lock_black_24dp.png" />
+            <Image url="@../Asserts/photo_camera_FILL0_wght400_GRAD0_opsz48.png" />
          </image>
       </ImageView>
    </children>
