@@ -15,22 +15,19 @@ public class ServerFormController {
     Socket socket;
 
     public void initialize() throws IOException {
-        new Thread(() -> {
-            try {
-                serverSocket = new ServerSocket(PORT);
-                System.out.println("Server start");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        serverStart();
+    }
 
+    public void serverStart() throws IOException {
+        serverSocket = new ServerSocket(PORT);
 
-            try {
-                socket = serverSocket.accept();
-                System.out.println("Client connected");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        while(!serverSocket.isClosed()){
+            socket = serverSocket.accept();
 
+            Clients clients = new Clients(socket);
+
+            Thread thread = new Thread(clients);
+            thread.start();
+        }
     }
 }

@@ -20,6 +20,7 @@ public class ClientTwoFormController {
     DataOutputStream dataOutputStream;
     String message = "";
     final int PORT = 5001;
+    String username;
 
     public void initialize(){
         new Thread(new Runnable() {
@@ -29,6 +30,7 @@ public class ClientTwoFormController {
                     socket = new Socket("localhost",PORT);
                     dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     dataInputStream = new DataInputStream(socket.getInputStream());
+                    setName();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -36,7 +38,40 @@ public class ClientTwoFormController {
         }).start();
     }
 
-    public void sendOnAction(ActionEvent event) {
+    public void sendOnAction(ActionEvent event) throws IOException {
+       while (socket.isConnected()){
+           dataOutputStream.writeUTF(txtMessage.getText());
+           txtArea.appendText("\nMe :"+txtMessage.getText());
+           dataOutputStream.flush();
+       }
+    }
 
+    public void setName() throws IOException {
+            username = ClientTwoLoginFormController.getName();
+    }
+
+    public void receivedMessages(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while(socket.isConnected()){
+                        message = dataInputStream.readUTF();
+                        txtArea.appendText(message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally {
+                    try {
+                        socket.close();
+                        dataInputStream.close();
+                        dataOutputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }).start();
     }
 }
