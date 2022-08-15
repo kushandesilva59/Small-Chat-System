@@ -16,10 +16,12 @@ public class ClientTwoLoginFormController {
     static String username;
 
     public void loginOnAction(ActionEvent event) throws IOException {
-        username = txtUsername.getText();
-       Stage stage = (Stage) clientTwoLoginContext.getScene().getWindow();
-       stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../View/ClientTwoForm.fxml"))));
-       stage.show();
+       if(txtUsername.getText()!=null){
+           username = txtUsername.getText();
+           Stage stage = (Stage) clientTwoLoginContext.getScene().getWindow();
+           stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../View/ClientTwoForm.fxml"))));
+           stage.show();
+       }
     }
 
     public static String getName(){

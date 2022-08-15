@@ -17,9 +17,15 @@ public class ClientThreeLoginFormController {
     static String username;
 
     public void loginOnAction(ActionEvent event) throws IOException {
-        username = txtUsername.getText();
-        Stage stage = (Stage) clientThreeLoginForm.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../View/ClientThreeForm.fxml"))));
-        stage.show();
+       if(txtUsername.getText()!=null){
+           username = txtUsername.getText();
+           Stage stage = (Stage) clientThreeLoginForm.getScene().getWindow();
+           stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../View/ClientThreeForm.fxml"))));
+           stage.show();
+       }
+    }
+
+    public static String getUsername(){
+        return username;
     }
 }

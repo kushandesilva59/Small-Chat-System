@@ -18,6 +18,10 @@ public class ClientThreeFormController {
     DataInputStream dataInputStream;
     final int PORT = 5001;
 
+    public void initialize(){
+
+    }
+
     public void sendOnAction(ActionEvent event) {
 
     }
