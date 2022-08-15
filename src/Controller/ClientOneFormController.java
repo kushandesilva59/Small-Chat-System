@@ -3,6 +3,7 @@ package Controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.DataInputStream;
@@ -106,5 +107,9 @@ public class ClientOneFormController {
 
             }
         }).start();
+    }
+
+    public void mouseClickOnAction(MouseEvent mouseEvent) {
+        System.out.println("Done...");
     }
 }
