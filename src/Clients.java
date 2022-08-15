@@ -20,8 +20,5 @@ public class Clients {
         userName = dataInputStream.readUTF();
         clients.add(this);
 
-
     }
-
-
 }
