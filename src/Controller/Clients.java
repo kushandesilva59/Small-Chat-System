@@ -11,22 +11,74 @@ public class Clients implements Runnable {
     Socket socket;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
+
     String userName;
 
     public Clients(Socket socket) throws IOException {
-        this.socket = socket;
+        try{
+            this.socket = socket;
+            this.dataInputStream = new DataInputStream(socket.getInputStream());
+            this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            userName = dataInputStream.readUTF();
+            clients.add(this);
+            appendMessage("Server : "+userName +"has entered the chat");
 
-        this.dataInputStream = new DataInputStream(socket.getInputStream());
-        this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        userName = dataInputStream.readUTF();
-        clients.add(this);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
 
     }
 
-    public Clients(){}
 
     @Override
     public void run() {
+        String message ="";
 
+        while(socket.isConnected()){
+            try {
+                message = dataInputStream.readUTF();
+                appendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+                closeAll(socket,dataOutputStream,dataInputStream);
+            }
+        }
+    }
+
+    private void closeAll(Socket socket, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
+        removeClientHandler();
+        try {
+            if (dataInputStream != null) {
+                dataInputStream.close();
+            }
+            if (dataOutputStream != null) {
+                dataOutputStream.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeClientHandler() throws IOException {
+        clients.remove(this);
+        appendMessage("Server : " + userName + " has left the chat");
+    }
+
+    private void appendMessage(String message) throws IOException {
+        for (Clients clients : clients){
+            try{
+                if(!clients.userName.equals(userName)){
+                    clients.dataOutputStream.writeUTF(message);
+                    dataOutputStream.flush();
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+        }
     }
 }

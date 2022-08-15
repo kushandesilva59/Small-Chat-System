@@ -9,8 +9,6 @@ import java.net.Socket;
 
 public class ServerFormController {
     ServerSocket serverSocket;
-    public TextArea txtArea;
-    public TextField txtMassage;
     final int PORT = 5001;
     Socket socket;
 
@@ -21,13 +19,19 @@ public class ServerFormController {
     public void serverStart() throws IOException {
         serverSocket = new ServerSocket(PORT);
 
-        while(!serverSocket.isClosed()){
-            socket = serverSocket.accept();
+        try{
+            while(!serverSocket.isClosed()){
+                socket = serverSocket.accept();
 
-            Clients clients = new Clients(socket);
+                Clients clients = new Clients(socket);
 
-            Thread thread = new Thread(clients);
-            thread.start();
+                Thread thread = new Thread(clients);
+                thread.start();
+            }
+        }catch (IOException e){
+
         }
+
+
     }
 }
