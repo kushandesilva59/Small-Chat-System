@@ -14,7 +14,7 @@ public class Clients implements Runnable {
 
     String userName;
 
-    public Clients(Socket socket) throws IOException {
+    public Clients(Socket socket){
         try{
             this.socket = socket;
             this.dataInputStream = new DataInputStream(socket.getInputStream());
@@ -41,12 +41,16 @@ public class Clients implements Runnable {
                 appendMessage(message);
             } catch (IOException e) {
                 e.printStackTrace();
-                closeAll(socket,dataOutputStream,dataInputStream);
+                try {
+                    closeAll(socket,dataOutputStream,dataInputStream);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         }
     }
 
-    private void closeAll(Socket socket, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
+    private void closeAll(Socket socket, DataOutputStream dataOutputStream, DataInputStream dataInputStream) throws IOException {
         removeClientHandler();
         try {
             if (dataInputStream != null) {
@@ -68,7 +72,7 @@ public class Clients implements Runnable {
         appendMessage("Server : " + userName + " has left the chat");
     }
 
-    private void appendMessage(String message) throws IOException {
+    private void appendMessage(String message){
         for (Clients clients : clients){
             try{
                 if(!clients.userName.equals(userName)){
