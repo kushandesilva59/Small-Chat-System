@@ -19,6 +19,15 @@ public class ClientTwoFormController {
     DataOutputStream dataOutputStream;
     String message = "";
 
+    public void initialize(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+    }
+
     public void sendOnAction(ActionEvent event) {
 
     }

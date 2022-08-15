@@ -14,12 +14,16 @@ public class ClientOneLoginFormController {
 
     public TextField txtUserName;
     public AnchorPane client1LoginFormContext;
-    String userName;
+    static String userName;
 
     public void loginOnAction(ActionEvent event) throws IOException {
         userName = txtUserName.getText();
         Stage stage = (Stage) client1LoginFormContext.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../View/ClientOneForm.fxml"))));
         stage.show();
+    }
+
+    public static String getName(){
+        return userName;
     }
 }
