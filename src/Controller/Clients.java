@@ -21,7 +21,7 @@ public class Clients implements Runnable {
             this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
             userName = dataInputStream.readUTF();
             clients.add(this);
-            appendMessage("Server : "+userName +"has entered the chat");
+            appendMessage("Server : "+userName +" has entered the chat");
 
         }catch (IOException e){
             e.printStackTrace();
@@ -69,18 +69,22 @@ public class Clients implements Runnable {
 
     private void removeClientHandler() throws IOException {
         clients.remove(this);
-        appendMessage("Server : " + userName + " has left the chat");
+        appendMessage(userName + " has left the chat");
     }
 
-    private void appendMessage(String message){
-        for (Clients clients : clients){
-            try{
-                if(!clients.userName.equals(userName)){
-                    clients.dataOutputStream.writeUTF(message);
-                    dataOutputStream.flush();
+    private void appendMessage(String message) throws IOException {
+        for (Clients client : clients) {
+            try {
+                if (!client.userName.equals(userName)) {
+
+                    client.dataOutputStream.writeUTF("\n"+userName + " : " + message);
+                    client.dataOutputStream.flush();
+
                 }
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
+                closeAll(socket, dataOutputStream,dataInputStream);
+
             }
 
         }
