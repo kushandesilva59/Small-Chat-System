@@ -6,8 +6,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -21,6 +24,8 @@ public class ClientOneFormController {
     String userName;
     String message = "";
     final int PORT = 5001;
+    File file;
+    int count = 0;
 
     public void initialize(){
         try {
@@ -56,17 +61,21 @@ public class ClientOneFormController {
 
     public void sendOnAction(ActionEvent event) throws IOException {
 
-        try {
-            while (socket.isConnected()){
-                dataOutputStream.writeUTF(txtMessage.getText());
-                txtArea.appendText("\nme : " + txtMessage.getText());
-                dataOutputStream.flush();
-                break;
-            }
-        } catch (IOException e) {
-            closeEveryThing(socket,dataInputStream,dataOutputStream);
-            e.printStackTrace();
-        }
+       if(count>0){
+           System.out.println("image");
+       }else{
+           try {
+               while (socket.isConnected()){
+                   dataOutputStream.writeUTF(txtMessage.getText());
+                   txtArea.appendText("\nme : " + txtMessage.getText());
+                   dataOutputStream.flush();
+                   break;
+               }
+           } catch (IOException e) {
+               closeEveryThing(socket,dataInputStream,dataOutputStream);
+               e.printStackTrace();
+           }
+       }
     }
 
     public void setName() {
@@ -110,6 +119,16 @@ public class ClientOneFormController {
     }
 
     public void mouseClickOnAction(MouseEvent mouseEvent) {
-        System.out.println("Done...");
+        JFileChooser fileChooser = new JFileChooser();
+        int res = fileChooser.showSaveDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION) {
+            File file1 = new File(fileChooser.getSelectedFile().getAbsolutePath());
+            System.out.println(file1);
+            file = file1;
+            txtMessage.setText(String.valueOf(file1));
+            ++count;
+
+        }
+        ImageIcon imageIcon = new ImageIcon();
     }
 }
