@@ -72,7 +72,7 @@ public class ClientThreeFormController {
             while (socket.isConnected()) {
                 String name = ClientThreeLoginFormController.getUsername();
                 System.out.println(name);
-                dataOutputStream.writeUTF("\n"+name);
+                dataOutputStream.writeUTF(name);
                 dataOutputStream.flush();
                 break;
             }

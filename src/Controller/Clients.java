@@ -21,13 +21,11 @@ public class Clients implements Runnable {
             this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
             userName = dataInputStream.readUTF();
             clients.add(this);
-            appendMessage("Server : "+userName +" has entered the chat");
+            appendMessage(userName +" has entered the chat");
 
         }catch (IOException e){
             e.printStackTrace();
         }
-
-
     }
 
 

@@ -6,12 +6,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import javax.imageio.stream.ImageInputStream;
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientOneFormController {
@@ -21,7 +20,6 @@ public class ClientOneFormController {
     Socket socket;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
-    String userName;
     String message = "";
     final int PORT = 5001;
     File file;
@@ -62,8 +60,28 @@ public class ClientOneFormController {
     public void sendOnAction(ActionEvent event) throws IOException {
 
        if(count>0){
-           System.out.println("image");
+           System.out.println(count);
+           System.out.println(file);
+           ImageIcon imageIcon = new ImageIcon(String.valueOf(file));
+
+           BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(dataOutputStream);
+
+           Image image = imageIcon.getImage();
+
+           BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_RGB);
+
+           Graphics graphics = bufferedImage.createGraphics();
+           graphics.drawImage(image,0,0,null);
+           graphics.dispose();
+           ImageIO.write(bufferedImage,"png",bufferedOutputStream);
+
+
+
+           bufferedOutputStream.close();
+           closeEveryThing(socket,dataInputStream,dataOutputStream);
+
        }else{
+
            try {
                while (socket.isConnected()){
                    dataOutputStream.writeUTF(txtMessage.getText());
@@ -78,12 +96,12 @@ public class ClientOneFormController {
        }
     }
 
+
     public void setName() {
         try {
             while (socket.isConnected()) {
                 String name = ClientOneLoginFormController.getName();
-                System.out.println(name);
-                dataOutputStream.writeUTF("\n"+name);
+                dataOutputStream.writeUTF(name);
                 dataOutputStream.flush();
                 break;
             }
@@ -123,12 +141,13 @@ public class ClientOneFormController {
         int res = fileChooser.showSaveDialog(null);
         if(res == JFileChooser.APPROVE_OPTION) {
             File file1 = new File(fileChooser.getSelectedFile().getAbsolutePath());
-            System.out.println(file1);
+           // System.out.println(file1);
             file = file1;
-            txtMessage.setText(String.valueOf(file1));
+            //txtMessage.setText(String.valueOf(file1));
+            ImageIcon imageIcon = new ImageIcon(String.valueOf(file1));
             ++count;
 
         }
-        ImageIcon imageIcon = new ImageIcon();
+
     }
 }
