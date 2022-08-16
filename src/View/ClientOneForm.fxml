@@ -24,5 +24,25 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
+      <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="499.0" layoutY="459.0" onMouseClicked="#emojiClickOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Asserts/Twemoji_1f600.svg.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="emojiPane" layoutX="70.0" layoutY="398.0" prefHeight="43.0" prefWidth="620.0">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="7.0" onMouseClicked="#smile1ClickOnAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Asserts/external-emoji-emoji-justicon-lineal-color-justicon-2.png" />
+               </image></ImageView>
+            <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="57.0" layoutY="7.0" onMouseClicked="#smile2ClickOnAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Asserts/external-emoji-emoji-justicon-lineal-color-justicon-3.png" />
+               </image></ImageView>
+            <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="102.0" layoutY="7.0" onMouseClicked="#smile3ClickOnAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Asserts/external-emoji-emoji-justicon-lineal-color-justicon-4.png" />
+               </image></ImageView>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

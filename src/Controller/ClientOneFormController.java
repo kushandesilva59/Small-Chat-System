@@ -17,6 +17,7 @@ public class ClientOneFormController {
     public AnchorPane client1Context;
     public TextArea txtArea;
     public TextField txtMessage;
+    public AnchorPane emojiPane;
     Socket socket;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
@@ -26,6 +27,7 @@ public class ClientOneFormController {
     int count = 0;
 
     public void initialize(){
+        emojiPane.setVisible(false);
         try {
 
             socket = new Socket("localhost",PORT);
@@ -149,5 +151,21 @@ public class ClientOneFormController {
 
         }
 
+    }
+
+    public void emojiClickOnAction(MouseEvent mouseEvent) {
+        emojiPane.setVisible(true);
+    }
+
+    public void smile1ClickOnAction(MouseEvent mouseEvent) {
+        txtMessage.appendText("\uD83D\uDE42");
+    }
+
+    public void smile2ClickOnAction(MouseEvent mouseEvent) {
+        txtMessage.appendText("\uD83D\uDE03");
+    }
+
+    public void smile3ClickOnAction(MouseEvent mouseEvent) {
+        txtMessage.appendText("\uD83D\uDE05");
     }
 }
